@@ -2,6 +2,9 @@
 - name: Add RHPDS VMware infra from RHPDS
   hosts: localhost
 
+  vars_files:
+    - inventory_source_vars.yml
+
   tasks:
   - name: Add machine credential
     ansible.controller.credential:
@@ -36,3 +39,4 @@
       credential: "{{ controller_credential_name | default('vmware-rhpds') }}"
       state: present
       validate_certs: false
+      source_vars: "{{ inventory_source_vars }}"
