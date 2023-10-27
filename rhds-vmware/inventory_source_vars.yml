@@ -1,0 +1,9 @@
+---
+inventory_source_vars:
+  hostnames:
+    - config.name
+  properties:
+    - all
+  filters:
+    - config.template == false and runtime.powerState == "poweredOn"
+  validate_certs: false

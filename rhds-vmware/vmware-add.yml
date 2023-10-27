@@ -6,37 +6,37 @@
     - inventory_source_vars.yml
 
   tasks:
-  - name: Add machine credential
-    ansible.controller.credential:
-      name: "{{ controller_credential_name | default('vmware-rhpds') }}"
-      description: "{{ controller_credential_description | default(omit) }}"
-      organization: "{{ controller_organization | default('demo') }}"
-      credential_type: VMware vCenter
-      state: present
-      inputs:
-        host: "{{ vmware_rhpds_host }}"
-        username: "{{ vmware_rhpds_user }}"
-        password: "{{ vmware_rhpds_password }}"
+    - name: Add machine credential
+      ansible.controller.credential:
+        name: "{{ controller_credential_name | default('vmware-rhpds') }}"
+        description: "{{ controller_credential_description | default(omit) }}"
+        organization: "{{ controller_organization | default('demo') }}"
+        credential_type: VMware vCenter
+        state: present
+        inputs:
+          host: "{{ vmware_rhpds_host }}"
+          username: "{{ vmware_rhpds_user }}"
+          password: "{{ vmware_rhpds_password }}"
 
-  - name: Create dynamic inventory on ansible automation controller
-    ansible.controller.inventory:
-      name: "{{ controller_inventory_name | default('VMware-RHPDS') }}"
-      description: "{{ controller_inventory_description | default(omit) }}"
-      organization: "{{ controller_organization | default('demo') }}"
-      state: present
+    - name: Create dynamic inventory on ansible automation controller
+      ansible.controller.inventory:
+        name: "{{ controller_inventory_name | default('VMware-RHPDS') }}"
+        description: "{{ controller_inventory_description | default(omit) }}"
+        organization: "{{ controller_organization | default('demo') }}"
+        state: present
 
-  - name: Create inventory source o Ansible controller
-    ansible.controller.inventory_source:
-      name: "{{ controller_inventory_source_name | default('VMware-RHPDS-source') }}"
-      inventory: "{{ controller_inventory_name | default('VMware-RHPDS') }}"
-      description: "{{ controller_inventory_source_name | default(omit) }}"
-      overwrite: "{{ overwrite_inventory | default('true') }}"
-      overwrite_vars: "{{ overwrite_inventory_vars | default('true') }}"
-      update_on_launch: "{{ update_on_launch | default('false') }}"
-      source: "{{ inventory_source | default('vmware') }}"
-      source_project: "{{ controller_source_project_name | default(omit) }}"
-      source_path: "{{ controller_source_path | default(omit) }}"
-      credential: "{{ controller_credential_name | default('vmware-rhpds') }}"
-      state: present
-      validate_certs: false
-      source_vars: "{{ inventory_source_vars }}"
+    - name: Create inventory source o Ansible controller
+      ansible.controller.inventory_source:
+        name: "{{ controller_inventory_source_name | default('VMware-RHPDS-source') }}"
+        inventory: "{{ controller_inventory_name | default('VMware-RHPDS') }}"
+        description: "{{ controller_inventory_source_name | default(omit) }}"
+        overwrite: "{{ overwrite_inventory | default('true') }}"
+        overwrite_vars: "{{ overwrite_inventory_vars | default('true') }}"
+        update_on_launch: "{{ update_on_launch | default('false') }}"
+        source: "{{ inventory_source | default('vmware') }}"
+        source_project: "{{ controller_source_project_name | default(omit) }}"
+        source_path: "{{ controller_source_path | default(omit) }}"
+        credential: "{{ controller_credential_name | default('vmware-rhpds') }}"
+        state: present
+        validate_certs: false
+        source_vars: "{{ inventory_source_vars }}"
