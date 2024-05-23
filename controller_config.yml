@@ -14,6 +14,6 @@
         extensions: ["yml"]
   roles:
     - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
-    - {role: infra.controller_configuration.userss, when: controller_userss is defined}
+    - {role: infra.controller_configuration.users, when: controller_userss is defined}
     - {role: infra.controller_configuration.roles, when: controller_roles is defined}
     - {role: infra.controller_configuration.projects, when: controller_projects is defined}
