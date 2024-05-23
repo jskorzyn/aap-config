@@ -1,0 +1,11 @@
+---
+controller_organizations:
+- name: Default
+  description: This is the Default Group
+#  max_hosts: "{{  | default(omit)}}"
+- name: Infra_Prod
+  description: This is the Infra Prod Org
+#  max_hosts: "{{ default(omit)}}"
+- name: App_Prod
+  description: This is the App Prod Org
+#  max_hosts: "{{ default(omit)}}"
