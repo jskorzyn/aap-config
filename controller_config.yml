@@ -6,6 +6,9 @@
   # controller_hostname: ansible-controller-web-svc-test-project.example.com
   # controller_username: admin
   # controller_password: changeme
+  vars:
+    controller_state: "{{ config_state | default('present') }}"
+
   pre_tasks:
     - name: Include vars from controller_configs directory
       ansible.builtin.include_vars:
