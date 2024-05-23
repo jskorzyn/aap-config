@@ -8,6 +8,7 @@ controller_projects:
   scm_type: git
   scm_update_on_launch: 'yes'
   scm_url: https://github.com/ansible/tower-example.git
+#  credential: test
 
 - name: Infra Prod Project
   organization: Infra_Prod
@@ -17,3 +18,4 @@ controller_projects:
   scm_type: git
   scm_update_on_launch: 'yes'
   scm_url: https://github.com/ansible/tower-example.git
+  #  credential: test
