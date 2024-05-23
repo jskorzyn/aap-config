@@ -13,7 +13,7 @@
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
+    - {role: infra.controller_configuration.organizations, when: controller_organizations is defined, tags: ["organizations"]}
     - {role: infra.controller_configuration.users, when: controller_user_accounts is defined}
     - {role: infra.controller_configuration.roles, when: controller_roles is defined}
     - {role: infra.controller_configuration.projects, when: controller_projects is defined}
