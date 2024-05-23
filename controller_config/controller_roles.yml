@@ -2,17 +2,21 @@
 controller_roles:
 - users:
     - aap_prod_admin
-  role: admin
+  roles: 
+    - admin
   organization: App_Prod
 - users:
     - aap_prod_user
-  role: member
+  roles: 
+    - member
   organization: App_Prod
 - users:
     - infra_prod_admin
-  role: admin
+  roles: 
+    - admin
   organization: Infra_Prod
 - users:
     - infra_prod_user
-  role: member
+  roles: 
+    - member
   organization: Infra_Prod
