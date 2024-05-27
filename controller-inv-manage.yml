@@ -10,7 +10,7 @@
     controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
     controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
     discovered_inv_names: []
-    approved_inv_names: ["Demo Inventory", "EDA Demo", "localhost", "Virtual_Platform"]
+    approved_inv_names: ["EDA Demo", "localhost", "Virtual_Platform", "app_inv", "infra_inv"]
     discovered_org_names: []
 
   tasks:
