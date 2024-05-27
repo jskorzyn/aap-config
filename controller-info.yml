@@ -66,6 +66,12 @@
         discovered_inv_names: "{{ discovered_inv_names + [r_metrics.json.results[item].name] }}"
       loop: "{{ range(0, r_metrics.json.count) | list }}"
 
+    - name: Debug discovered_inv_names var
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        var: discovered_inv_names
+
+
     # - name: Remove all  not approved inventories using ansible.controller collection module
     #   # Content suggestion provided by Ansible Lightspeed
     #   loop: "{{ not_approved_inv_ids }}"
