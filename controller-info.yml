@@ -28,7 +28,7 @@
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
         var: r_metrics
-   
+ 
     - name: Debug metrics
       ansible.builtin.debug:
         verbosity: 1
