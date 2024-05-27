@@ -11,4 +11,3 @@
     organization: "{{ org_items }}"
   loop: "{{ not_approved_inv_names }}"
   register: r_remove_inv
-  

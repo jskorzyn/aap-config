@@ -1,0 +1,3 @@
+[Infra Inv]
+host01 ansible_host=127.0.0.1
+host02 ansible_host=127.0.0.1
