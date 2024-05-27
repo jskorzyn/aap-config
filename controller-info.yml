@@ -90,7 +90,7 @@
         validate_certs: "{{ controller_validate_certs }}"
         name: "{{ item }}"
         state: absent
-        organization: "{{ Default }}"
+        organization: "Default"
       loop: "{{ not_approved_inv_names }}"
       register: r_remove_inv
       failed_when: r_remove_inv.msg is not search('does not exist')
