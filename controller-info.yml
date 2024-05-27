@@ -1,8 +1,9 @@
+---
 - name: Get stats
   hosts: localhost
   connection: local
   gather_facts: true
-  vars:
+  #vars:
     # # Using the Tower env names for backwards compatibility
     # controller_hostname: "{{ lookup('ansible.builtin.env', 'TOWER_HOST') }}"
     # controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
