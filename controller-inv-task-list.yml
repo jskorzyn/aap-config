@@ -1,0 +1,13 @@
+---    
+- name: Remove all  not approved inventories using ansible.controller collection module
+  # Content suggestion provided by Ansible Lightspeed
+  ansible.controller.inventory:
+    controller_host: "{{ controller_hostname }}"
+    controller_username: "{{ controller_username }}"
+    controller_password: "{{ controller_password }}"
+    validate_certs: "{{ controller_validate_certs }}"
+    name: "{{ item }}"
+    state: absent
+    organization: "{{ org_items }}"
+  loop: "{{ not_approved_inv_names }}"
+  register: r_remove_inv

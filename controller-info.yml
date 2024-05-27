@@ -9,13 +9,14 @@
     controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
     controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
-    discovered_inv_ids: []
-    approved_inv_ids: [1, 2, 4, 5]
+    # discovered_inv_ids: []
+    # approved_inv_ids: [1, 2, 4, 5]
     discovered_inv_names: []
     approved_inv_names: ["Demo Inventory", "EDA Demo", "localhost", "Virtual_Platform"]
+    discovered_org_names: []
 
   tasks:
-    - name: Get number of JT
+    - name: Get Inventory data
       ansible.builtin.uri:
         url: "{{ controller_hostname }}/api/v2/inventories/?format=json"
         method: GET
@@ -27,6 +28,19 @@
           Content-Type: application/json
         validate_certs: false
       register: inv_data
+
+    - name: Get Organization data
+      ansible.builtin.uri:
+        url: "{{ controller_hostname }}/api/v2/organizations/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: org_data
 
     # - name: Debug inv_data inv count
     #   # Content suggestion provided by Ansible Lightspeed
@@ -81,19 +95,36 @@
       ansible.builtin.debug:
         var: not_approved_inv_names
 
-    - name: Remove all  not approved inventories using ansible.controller collection module
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.controller.inventory:
-        controller_host: "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        validate_certs: "{{ controller_validate_certs }}"
-        name: "{{ item }}"
-        state: absent
-        organization: "Default"
-      loop: "{{ not_approved_inv_names }}"
-      register: r_remove_inv
-    #  failed_when: r_remove_inv.msg is not search('does not exist')
+    - name: Set fact called discovered_org_names with list from org_data.json.results[item].name
+      ansible.builtin.set_fact:
+        discovered_org_names: "{{ discovered_org_names + [org_data.json.results[item].name] }}"
+      loop: "{{ range(0, org_data.json.count) | list }}"
+
+    - name: Debug discovered_org_names var
+      ansible.builtin.debug:
+        var: discovered_org_names
+
+    - name: Loop over invluded tasks list from file controller-inv-task-list.yml with loop control
+      ansible.builtin.include_tasks:
+        file: controller-inv-task-list.yml
+      loop: "{{ discovered_org_names }}"
+      loop_control:
+        loop_var: org_items
+
+
+    # - name: Remove all  not approved inventories using ansible.controller collection module
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.controller.inventory:
+    #     controller_host: "{{ controller_hostname }}"
+    #     controller_username: "{{ controller_username }}"
+    #     controller_password: "{{ controller_password }}"
+    #     validate_certs: "{{ controller_validate_certs }}"
+    #     name: "{{ item }}"
+    #     state: absent
+    #     organization: "Default"
+    #   loop: "{{ not_approved_inv_names }}"
+    #   register: r_remove_inv
+
 
 
     # - name: Debug metrics
