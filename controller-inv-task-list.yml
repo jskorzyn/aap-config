@@ -1,4 +1,4 @@
----    
+---
 - name: Remove all  not approved inventories using ansible.controller collection module
   # Content suggestion provided by Ansible Lightspeed
   ansible.controller.inventory:
@@ -11,3 +11,4 @@
     organization: "{{ org_items }}"
   loop: "{{ not_approved_inv_names }}"
   register: r_remove_inv
+  
