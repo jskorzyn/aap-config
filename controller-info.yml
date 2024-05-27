@@ -110,6 +110,7 @@
       loop: "{{ discovered_org_names }}"
       loop_control:
         loop_var: org_items
+      when: not_approved_inv_names defined
 
 
     # - name: Remove all  not approved inventories using ansible.controller collection module
