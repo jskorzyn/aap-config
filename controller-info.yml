@@ -28,37 +28,37 @@
         validate_certs: false
       register: r_metrics
 
-    - name: Debug r_metrics inv count
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.debug:
-        var: r_metrics.json.count
+    # - name: Debug r_metrics inv count
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.debug:
+    #     var: r_metrics.json.count
 
-    - name: Debug r_metrics inv ids
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.debug:
-        var: r_metrics.json.results[item].id
-      loop: "{{ range(0, r_metrics.json.count) | list }}"
+    # - name: Debug r_metrics inv ids
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.debug:
+    #     var: r_metrics.json.results[item].id
+    #   loop: "{{ range(0, r_metrics.json.count) | list }}"
 
-    - name: Set fact called inv_ids with list from r_metrics.json.results[item].id
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.set_fact:
-        discovered_inv_ids: "{{ discovered_inv_ids + [r_metrics.json.results[item].id] }}"
-      loop: "{{ range(0, r_metrics.json.count) | list }}"
+    # - name: Set fact called inv_ids with list from r_metrics.json.results[item].id
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.set_fact:
+    #     discovered_inv_ids: "{{ discovered_inv_ids + [r_metrics.json.results[item].id] }}"
+    #   loop: "{{ range(0, r_metrics.json.count) | list }}"
 
-    - name: Debug inv_ids var
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.debug:
-        var: discovered_inv_ids
+    # - name: Debug inv_ids var
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.debug:
+    #     var: discovered_inv_ids
 
-    - name: Compare discovered_inv_ids and approved_inv_ids abd debug difference
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.debug:
-        msg: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
+    # - name: Compare discovered_inv_ids and approved_inv_ids abd debug difference
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.debug:
+    #     msg: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
 
-    - name: Set fact called not_approved_inv_ids form discovered_inv_ids | difference(approved_inv_ids)
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.builtin.set_fact:
-        not_approved_inv_ids: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
+    # - name: Set fact called not_approved_inv_ids form discovered_inv_ids | difference(approved_inv_ids)
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   ansible.builtin.set_fact:
+    #     not_approved_inv_ids: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
 
     - name: Set fact called discovered_inv_names with list from r_metrics.json.results[item].name
       # Content suggestion provided by Ansible Lightspeed
@@ -94,7 +94,6 @@
     #     name: "{{ item }}"
     #     state: absent
     #     organization: "{{ _organization_ }}"
-
 
 
     # - name: Debug metrics
