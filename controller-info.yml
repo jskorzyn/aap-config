@@ -34,13 +34,13 @@
       ansible.builtin.debug:
         var: r_metrics.json.results[0].id
 
-    - name: Debug metrics
-      ansible.builtin.debug:
-        verbosity: 1
-        msg:
-          - "{{ r_metrics }}"
-          - "{{ r_metrics['json']['awx_system_info'] }}"
-          - "{{ r_metrics['json']['awx_job_templates_total'] }}"
-          - "{{ r_metrics['json']['awx_workflow_job_templates_total'] }}"
-          - "{{ r_metrics['json']['awx_license_instance_total'] }}"
-          - "{{ r_metrics['json']['awx_license_instance_free'] }}"
+    # - name: Debug metrics
+    #   ansible.builtin.debug:
+    #     verbosity: 1
+    #     msg:
+    #       - "{{ r_metrics }}"
+    #       - "{{ r_metrics['json']['awx_system_info'] }}"
+    #       - "{{ r_metrics['json']['awx_job_templates_total'] }}"
+    #       - "{{ r_metrics['json']['awx_workflow_job_templates_total'] }}"
+    #       - "{{ r_metrics['json']['awx_license_instance_total'] }}"
+    #       - "{{ r_metrics['json']['awx_license_instance_free'] }}"
