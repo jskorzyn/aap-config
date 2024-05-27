@@ -32,7 +32,7 @@
     - name: Debug r_metrics inv ids
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
-        var: r_metrics.json.results[0].id
+        var: r_metrics.json.results[1].id
 
     # - name: Debug metrics
     #   ansible.builtin.debug:
