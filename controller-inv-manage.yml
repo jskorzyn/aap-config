@@ -1,0 +1,68 @@
+---
+- name: Get stats
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    # # Using the Tower env names for backwards compatibility
+    controller_hostname: "{{ lookup('ansible.builtin.env', 'TOWER_HOST') }}"
+    controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
+    controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
+    controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
+    discovered_inv_names: []
+    approved_inv_names: ["Demo Inventory", "EDA Demo", "localhost", "Virtual_Platform"]
+    discovered_org_names: []
+
+  tasks:
+    - name: Get Inventory data
+      ansible.builtin.uri:
+        url: "{{ controller_hostname }}/api/v2/inventories/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: inv_data
+
+    - name: Get Organization data
+      ansible.builtin.uri:
+        url: "{{ controller_hostname }}/api/v2/organizations/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: org_data
+
+    - name: Set fact called discovered_inv_names with list from inv_data.json.results[item].name
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        discovered_inv_names: "{{ discovered_inv_names + [inv_data.json.results[item].name] }}"
+      loop: "{{ range(0, inv_data.json.count) | list }}"
+
+    - name: Set fact called not_approved_inv_names form discovered_inv_names | difference(approved_inv_names)
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        not_approved_inv_names: "{{ discovered_inv_names | difference(approved_inv_names) }}"
+
+    # - name: Debug not_approved_inv_names var
+    #   ansible.builtin.debug:
+    #     var: not_approved_inv_names
+
+    - name: Set fact called discovered_org_names with list from org_data.json.results[item].name
+      ansible.builtin.set_fact:
+        discovered_org_names: "{{ discovered_org_names + [org_data.json.results[item].name] }}"
+      loop: "{{ range(0, org_data.json.count) | list }}"
+
+    - name: Loop over invluded tasks list from file controller-inv-task-list.yml with loop control
+      ansible.builtin.include_tasks:
+        file: "{{ playbook_dir }}/task_lists/controller-inv-task-list.yml }}"
+      loop: "{{ discovered_org_names }}"
+      loop_control:
+        loop_var: org_items
