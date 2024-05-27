@@ -26,24 +26,24 @@
         headers:
           Content-Type: application/json
         validate_certs: false
-      register: r_metrics
+      register: inv_data
 
-    # - name: Debug r_metrics inv count
+    # - name: Debug inv_data inv count
     #   # Content suggestion provided by Ansible Lightspeed
     #   ansible.builtin.debug:
-    #     var: r_metrics.json.count
+    #     var: inv_data.json.count
 
-    # - name: Debug r_metrics inv ids
+    # - name: Debug inv_data inv ids
     #   # Content suggestion provided by Ansible Lightspeed
     #   ansible.builtin.debug:
-    #     var: r_metrics.json.results[item].id
-    #   loop: "{{ range(0, r_metrics.json.count) | list }}"
+    #     var: inv_data.json.results[item].id
+    #   loop: "{{ range(0, inv_data.json.count) | list }}"
 
-    # - name: Set fact called inv_ids with list from r_metrics.json.results[item].id
+    # - name: Set fact called inv_ids with list from inv_data.json.results[item].id
     #   # Content suggestion provided by Ansible Lightspeed
     #   ansible.builtin.set_fact:
-    #     discovered_inv_ids: "{{ discovered_inv_ids + [r_metrics.json.results[item].id] }}"
-    #   loop: "{{ range(0, r_metrics.json.count) | list }}"
+    #     discovered_inv_ids: "{{ discovered_inv_ids + [inv_data.json.results[item].id] }}"
+    #   loop: "{{ range(0, inv_data.json.count) | list }}"
 
     # - name: Debug inv_ids var
     #   # Content suggestion provided by Ansible Lightspeed
@@ -60,11 +60,11 @@
     #   ansible.builtin.set_fact:
     #     not_approved_inv_ids: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
 
-    - name: Set fact called discovered_inv_names with list from r_metrics.json.results[item].name
+    - name: Set fact called discovered_inv_names with list from inv_data.json.results[item].name
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.set_fact:
-        discovered_inv_names: "{{ discovered_inv_names + [r_metrics.json.results[item].name] }}"
-      loop: "{{ range(0, r_metrics.json.count) | list }}"
+        discovered_inv_names: "{{ discovered_inv_names + [inv_data.json.results[item].name] }}"
+      loop: "{{ range(0, inv_data.json.count) | list }}"
 
     - name: Debug discovered_inv_names var
       # Content suggestion provided by Ansible Lightspeed
@@ -81,19 +81,19 @@
       ansible.builtin.debug:
         var: not_approved_inv_names
 
-    # - name: Remove all  not approved inventories using ansible.controller collection module
-    #   # Content suggestion provided by Ansible Lightspeed
-    #   loop: "{{ not_approved_inv_ids }}"
-    #   register: r_remove_inv
-    #   failed_when: r_remove_inv.msg is not search('does not exist')
-    #   awx.awx.inventory:
-    #     controller_host: "{{ controller_hostname }}"
-    #     controller_username: "{{ controller_username }}"
-    #     controller_password: "{{ controller_password }}"
-    #     validate_certs: "{{ controller_validate_certs }}"
-    #     name: "{{ item }}"
-    #     state: absent
-    #     organization: "{{ _organization_ }}"
+    - name: Remove all  not approved inventories using ansible.controller collection module
+      # Content suggestion provided by Ansible Lightspeed
+      loop: "{{ not_approved_inv_ids }}"
+      register: r_remove_inv
+      failed_when: r_remove_inv.msg is not search('does not exist')
+      awx.awx.inventory:
+        controller_host: "{{ controller_hostname }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: "{{ controller_validate_certs }}"
+        name: "{{ item }}"
+        state: absent
+        organization: "{{ _organization_ }}"
 
 
     # - name: Debug metrics
