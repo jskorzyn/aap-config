@@ -24,11 +24,16 @@
         validate_certs: false
       register: r_metrics
 
-    - name: Debug r_metrics
+    - name: Debug r_metrics inv count
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
-        var: r_metrics
- 
+        var: r_metrics.json.count
+
+    - name: Debug r_metrics inv ids
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        var: r_metrics.json.results[0].id
+
     - name: Debug metrics
       ansible.builtin.debug:
         verbosity: 1
