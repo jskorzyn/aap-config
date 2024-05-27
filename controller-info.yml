@@ -13,7 +13,7 @@
   tasks:
     - name: Get number of JT
       ansible.builtin.uri:
-        url: "{{ controller_hostname }}/api/v2/metrics/?format=json"
+        url: "{{ controller_hostname }}/api/v2/inventories/?format=json"
         method: GET
         force_basic_auth: true
         user: "{{ controller_username }}"
