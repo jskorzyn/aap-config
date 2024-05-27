@@ -33,7 +33,19 @@
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
         var: r_metrics.json.results[item].id
-      loop: "{{ range(0, r_metrics.json.count)|list }}"
+      loop: "{{ range(0, r_metrics.json.count) | list }}"
+
+    - name: Set fact called inv_ids with list from r_metrics.json.results[item].id
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        inv_ids: "{{ inv_ids + [r_metrics.json.results[item].id] }}"
+      loop: "{{ range(0, r_metrics.json.count) | list }}"
+
+    - name: Debug inv_ids var
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        var: inv_ids
+
 
     # - name: Debug metrics
     #   ansible.builtin.debug:
