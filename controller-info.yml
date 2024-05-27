@@ -12,7 +12,7 @@
     discovered_inv_ids: []
     approved_inv_ids: [1, 2, 4, 5]
     discovered_inv_names: []
-    approved_inv_names: [1, 2, 4, 5]
+    approved_inv_names: ["Demo Inventory", "EDA Demo", "localhost", "Virtual_Platform"]
 
   tasks:
     - name: Get number of JT
@@ -71,6 +71,15 @@
       ansible.builtin.debug:
         var: discovered_inv_names
 
+    - name: Set fact called not_approved_inv_names form discovered_inv_names | difference(approved_inv_names)
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        not_approved_inv_names: "{{ discovered_inv_names | difference(approved_inv_names) }}"
+
+    - name: Debug not_approved_inv_names var
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        var: not_approved_inv_names
 
     # - name: Remove all  not approved inventories using ansible.controller collection module
     #   # Content suggestion provided by Ansible Lightspeed
