@@ -83,9 +83,6 @@
 
     - name: Remove all  not approved inventories using ansible.controller collection module
       # Content suggestion provided by Ansible Lightspeed
-      loop: "{{ not_approved_inv_ids }}"
-      register: r_remove_inv
-      failed_when: r_remove_inv.msg is not search('does not exist')
       awx.awx.inventory:
         controller_host: "{{ controller_hostname }}"
         controller_username: "{{ controller_username }}"
@@ -93,7 +90,10 @@
         validate_certs: "{{ controller_validate_certs }}"
         name: "{{ item }}"
         state: absent
-        organization: "{{ _organization_ }}"
+        organization: "{{ Default }}"
+      loop: "{{ not_approved_inv_ids }}"
+      register: r_remove_inv
+      failed_when: r_remove_inv.msg is not search('does not exist')
 
 
     # - name: Debug metrics
