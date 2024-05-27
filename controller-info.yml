@@ -9,6 +9,7 @@
     controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
     controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
+    inv_ids: []
 
   tasks:
     - name: Get number of JT
