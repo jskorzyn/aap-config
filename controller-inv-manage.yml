@@ -62,7 +62,7 @@
 
     - name: Loop over invluded tasks list from file controller-inv-task-list.yml with loop control
       ansible.builtin.include_tasks:
-        file: "{{ playbook_dir }}/task_lists/controller-inv-task-list.yml }}"
+        file: "{{ playbook_dir }}/task_lists/controller-inv-task-list.yml"
       loop: "{{ discovered_org_names }}"
       loop_control:
         loop_var: org_items
