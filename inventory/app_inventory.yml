@@ -1,0 +1,4 @@
+---
+[APP Inv]
+host03 ansible_host=127.0.0.1
+host04 ansible_host=127.0.0.1
