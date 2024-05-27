@@ -9,7 +9,8 @@
     controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
     controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
-    inv_ids: []
+    discovered_inv_ids: []
+    approved_inv_ids: [1, 2, 5]
 
   tasks:
     - name: Get number of JT
@@ -39,13 +40,18 @@
     - name: Set fact called inv_ids with list from r_metrics.json.results[item].id
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.set_fact:
-        inv_ids: "{{ inv_ids + [r_metrics.json.results[item].id] }}"
+        discovered_inv_ids: "{{ discovered_inv_ids + [r_metrics.json.results[item].id] }}"
       loop: "{{ range(0, r_metrics.json.count) | list }}"
 
     - name: Debug inv_ids var
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
-        var: inv_ids
+        var: discovered_inv_ids
+
+    - name: Compare discovered_inv_ids and approved_inv_ids abd debug difference
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        msg: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
 
 
     # - name: Debug metrics
