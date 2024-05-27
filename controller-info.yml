@@ -11,6 +11,8 @@
     controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
     discovered_inv_ids: []
     approved_inv_ids: [1, 2, 4, 5]
+    discovered_inv_names: []
+    approved_inv_names: [1, 2, 4, 5]
 
   tasks:
     - name: Get number of JT
@@ -52,6 +54,32 @@
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
         msg: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
+
+    - name: Set fact called not_approved_inv_ids form discovered_inv_ids | difference(approved_inv_ids)
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        not_approved_inv_ids: "{{ discovered_inv_ids | difference(approved_inv_ids) }}"
+
+    - name: Set fact called discovered_inv_names with list from r_metrics.json.results[item].name
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.set_fact:
+        discovered_inv_names: "{{ discovered_inv_names + [r_metrics.json.results[item].name] }}"
+      loop: "{{ range(0, r_metrics.json.count) | list }}"
+
+    # - name: Remove all  not approved inventories using ansible.controller collection module
+    #   # Content suggestion provided by Ansible Lightspeed
+    #   loop: "{{ not_approved_inv_ids }}"
+    #   register: r_remove_inv
+    #   failed_when: r_remove_inv.msg is not search('does not exist')
+    #   awx.awx.inventory:
+    #     controller_host: "{{ controller_hostname }}"
+    #     controller_username: "{{ controller_username }}"
+    #     controller_password: "{{ controller_password }}"
+    #     validate_certs: "{{ controller_validate_certs }}"
+    #     name: "{{ item }}"
+    #     state: absent
+    #     organization: "{{ _organization_ }}"
+
 
 
     # - name: Debug metrics
