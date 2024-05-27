@@ -83,7 +83,7 @@
 
     - name: Remove all  not approved inventories using ansible.controller collection module
       # Content suggestion provided by Ansible Lightspeed
-      awx.awx.inventory:
+      ansible.controller.inventory:
         controller_host: "{{ controller_hostname }}"
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
