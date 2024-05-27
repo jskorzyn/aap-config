@@ -32,7 +32,8 @@
     - name: Debug r_metrics inv ids
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.debug:
-        var: r_metrics.json.results[1].id
+        var: r_metrics.json.results[item].id
+      loop: "{{ range(0, r_metrics.json.count)|list }}"
 
     # - name: Debug metrics
     #   ansible.builtin.debug:
