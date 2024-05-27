@@ -93,7 +93,7 @@
         organization: "Default"
       loop: "{{ not_approved_inv_names }}"
       register: r_remove_inv
-      failed_when: r_remove_inv.msg is not search('does not exist')
+    #  failed_when: r_remove_inv.msg is not search('does not exist')
 
 
     # - name: Debug metrics
