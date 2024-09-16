@@ -1,0 +1,11 @@
+- name: Display job information
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Show job ID
+      ansible.builtin.debug:
+        msg: "Job ID: {{ awx_job_id }}"
+
+    - name: Show job launch type
+      ansible.builtin.debug:
+        msg: "Launch Type: {{ awx_job_launch_type }}"
