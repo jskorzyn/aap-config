@@ -4,7 +4,7 @@
   tasks:
     - name: Add ansible task delay
       ansible.builtin.pause:
-        seconds: 10
+        seconds: 5
 
     - name: Show workflow ID
       ansible.builtin.debug:
@@ -12,4 +12,4 @@
 
     - name: Show job launch type
       ansible.builtin.debug:
-        msg: "Launch Type: {{ awx_job_launch_type }}"
+        msg: "Launch Type: {{ awx_workflow_job_name }}"

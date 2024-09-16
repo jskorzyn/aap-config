@@ -4,7 +4,7 @@
   tasks:
     - name: Add ansible task delay
       ansible.builtin.pause:
-        seconds: 10
+        seconds: 5
 
     - name: Display AWX vars
       ansible.builtin.debug:
