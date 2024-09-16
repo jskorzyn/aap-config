@@ -1,4 +1,4 @@
 ---
 collections:
-  - name: infra.controller_configuration
-    version: 2.7.1
+#  - name: infra.controller_configuration
+#    version: 2.7.1
