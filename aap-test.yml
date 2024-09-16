@@ -5,7 +5,7 @@
     - name: Add ansible task delay
       ansible.builtin.pause:
         seconds: 10
-    
+
     - name: Show job ID
       ansible.builtin.debug:
         msg: "Job ID: {{ awx_job_id }}"
